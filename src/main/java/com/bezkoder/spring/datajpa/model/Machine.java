@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.lang.Nullable;
 import com.bezkoder.spring.datajpa.service.UserService;
 import javax.persistence.*;
+import java.sql.Blob;
 
 @Data
 @Builder
@@ -30,6 +31,8 @@ public class Machine {
     private boolean user_lock;
     @Column(name= "machine_lock",columnDefinition = "boolean default false")
     private boolean machine_lock;
+    @Lob
+    private Blob machinePicture;
     @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @Nullable
 //    @JsonIgnore

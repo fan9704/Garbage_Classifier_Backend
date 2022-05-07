@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.bezkoder.spring.datajpa.model.*;
 import com.bezkoder.spring.datajpa.repository.BankAcctRepository;
@@ -84,7 +85,7 @@ public class UserController {
             String password= userDTO.getPassword();
             String email= userDTO.getEmail();
             Boolean active= userDTO.getActive();
-            User user=new User(username,email,password,name,lastname,active);
+            User user=new User(username,email,password,name,lastname,active);//,new Set<Role>()
             userService.saveUser(user);
            walletRepository.save(new Wallet(new BigDecimal("0"),"Create Account",user));
            bankAcctRepository.save(new Bank_acct(null,null,user));
