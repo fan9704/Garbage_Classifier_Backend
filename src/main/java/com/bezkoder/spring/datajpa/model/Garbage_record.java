@@ -6,7 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Data
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,4 +47,5 @@ public class Garbage_record {
 //        this.time_stamp = time_stamp;
         this.machine_id = machine_id;
     }
+    //
 }

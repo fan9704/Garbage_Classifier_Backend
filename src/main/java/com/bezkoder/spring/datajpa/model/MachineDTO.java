@@ -3,6 +3,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.*;
 import javax.persistence.*;
+import java.sql.Blob;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +18,7 @@ public class MachineDTO {
     private String location;
     private boolean user_lock;
     private boolean machine_lock;
+    @Lob
+    private Blob machinePicture;
 
 }

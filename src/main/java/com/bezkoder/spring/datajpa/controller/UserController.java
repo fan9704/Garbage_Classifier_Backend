@@ -4,8 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
+import com.bezkoder.spring.datajpa.model.LoginDTO;
+import com.bezkoder.spring.datajpa.model.UserDTO;
 import com.bezkoder.spring.datajpa.model.*;
 import com.bezkoder.spring.datajpa.repository.BankAcctRepository;
 import com.bezkoder.spring.datajpa.service.UserService;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bezkoder.spring.datajpa.repository.WalletRepository;
 import com.bezkoder.spring.datajpa.repository.UserRepository;

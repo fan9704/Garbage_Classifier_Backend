@@ -13,4 +13,6 @@ public interface MachineStorageRepository extends JpaRepository<Machine_storage,
     List<Machine_storage> findByMachine(Machine machine);
     List<Machine_storage> findByGarbageType(Garbage_type garbage_type);
     Machine_storage findOneByMachineAndGarbageType(Machine machine,Garbage_type garbage_type);
+
+
 }
