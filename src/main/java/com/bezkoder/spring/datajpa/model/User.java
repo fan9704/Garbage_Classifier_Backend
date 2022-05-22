@@ -3,7 +3,6 @@ package com.bezkoder.spring.datajpa.model;
 import javax.persistence.*;
 
 import com.bezkoder.spring.datajpa.model.Wallet;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.*;
@@ -17,7 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Data
-
+@Builder
 //@AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -49,17 +48,12 @@ public class User {
     private String lastName;
     @Column(name = "active")
     private Boolean active;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id",columnDefinition = "int default 0"))
     private Set<Role> roles;
-
 //    @OneToOne
 //    @JoinColumn(name = "bank_acct_id")
 //    private Bank_acct bank_acct;
-
-    @OneToOne(mappedBy = "user_id",cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Wallet wallet;
 
 
     public User(long id, String userName, String email, String password, String name, String lastName, Boolean active, Set<Role> roles) {

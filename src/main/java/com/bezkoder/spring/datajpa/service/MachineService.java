@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 
 @Service
@@ -28,18 +30,16 @@ public class  MachineService {
     private Machine _machine;
     private Optional<Machine> machineOptional;
 
-    public Machine findMachineById(long mahcineId) {
+    public Machine findMachineById(long mahcineId){
         machineOptional = machineRepository.findById(mahcineId);
 
 
         return machineOptional.get();
     }
-
     public List<Machine> findAll() {
         return machineRepository.findAll();
     }
-
-    public Machine createMachine(MachineDTO machineDTO) {
+    public Machine createMachine(MachineDTO machineDTO){
         _machine = new Machine();
         _machine.setMachinePicture(machineDTO.getMachinePicture());
         _machine.setLocation(machineDTO.getLocation());
@@ -58,36 +58,36 @@ public class  MachineService {
 
         }
 
-        machineRepository.save(_machine);
+           machineRepository.save(_machine);
 
 
-        return _machine;
+        return  _machine;
     }
+    public ResponseEntity linkMachine(long MachineId , long userId){
 
-    public ResponseEntity linkMachine(long MachineId, long userId) {
+            _machine = findMachineById(MachineId);
+            User _user = userService.findUserById(userId);
 
-        _machine = findMachineById(MachineId);
-        User _user = userService.findUserById(userId);
+            if (!_machine.isUser_lock()){
 
-        if (!_machine.isUser_lock()) {
-
-            _machine.setCurrent_user(_user);
-            _machine.setUser_lock(true);
-            machineRepository.save(_machine);
+                _machine.setCurrent_user(_user);
+                _machine.setUser_lock(true);
+                machineRepository.save(_machine);
 
 
-            return new ResponseEntity(_machine, HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.CONFLICT);
-        }
+                return new ResponseEntity(_machine,HttpStatus.OK);
+            }
+
+            else {
+                  return new ResponseEntity(HttpStatus.CONFLICT);
+            }
     }
-
-    public ResponseEntity unLinkMachine(long MachineId) {
+    public ResponseEntity unLinkMachine(long MachineId){
 
         _machine = findMachineById(MachineId);
         User _user = userService.findUserById(0); // userId is anonymous user
 
-        if (_machine.isUser_lock()) {
+        if (_machine.isUser_lock()){
 
             _machine.setCurrent_user(_user);
             _machine.setUser_lock(false);
@@ -95,41 +95,37 @@ public class  MachineService {
             machineRepository.save(_machine);
 
 
-            return new ResponseEntity(_machine, HttpStatus.OK);
-        } else {
+            return new ResponseEntity(_machine,HttpStatus.OK);
+        }
+
+        else {
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
     }
-
-    public Machine lockMachine(long machineId) {
+    public Machine lockMachine(long machineId){
         _machine = findMachineById(machineId);
         _machine.setMachine_lock(true);
 
-        return machineRepository.save(_machine);
+        return  machineRepository.save(_machine);
     }
-
-    public Machine unlockMachine(long machineId) {
+    public Machine unlockMachine(long machineId){
         _machine = findMachineById(machineId);
         _machine.setMachine_lock(false);
 
-        return machineRepository.save(_machine);
+        return  machineRepository.save(_machine);
     }
-
-    public Machine lockUserLink(long machineId) {
+    public Machine lockUserLink(long machineId){
         _machine = findMachineById(machineId);
         _machine.setUser_lock(true);
 
-        return machineRepository.save(_machine);
+        return  machineRepository.save(_machine);
     }
-
     public Long count() {
         return machineRepository.count();
     }
-
     public void deleteById(Long machineId) {
         machineRepository.deleteById(machineId);
     }
-
     public Machine updata(MachineDTO machineDTO, long id) {
         _machine = findMachineById(id);
         _machine.setMachinePicture(machineDTO.getMachinePicture());
@@ -140,61 +136,27 @@ public class  MachineService {
         return machineRepository.save(_machine);
     }
 
-    public ResponseEntity<Machine> updataRecycleRecord(long machineId, MachineDTO machine) {
+//    public ResponseEntity<Machine> recordInfo(long machineId , Set<Machine_storage> machineStorages, Garbage_recordDTO garbageRecordDTO) {
+//
+//            _machine = findMachineById(machineId);
+//            User user ;
+//
+//            _machine.setMachineStorages(machineStorages);
+//
+//            Set<Garbage_record> garbage_records = new HashSet<>();
+//            Garbage_record garbage_record = new Garbage_record();
+//
+//            garbage_record.setGarbage_type(garbageTypeService.findByGarbageTypeId((garbageRecordDTO.getGarbage_type())));
+//            garbage_record.setWeight(garbageRecordDTO.getWeight());
+//            garbage_record.setUser(_machine.getCurrent_user());
+//            garbage_record.setMachine_id(_machine);
+//            garbage_records.add(garbage_record);
+//
+//            _machine.setGarbage_records(garbage_records);
+//
+//        return  new ResponseEntity<>(machineRepository.save(_machine),HttpStatus.OK);
+//    }
 
-        _machine = findMachineById(machineId);
-        Set<Machine_storage> machineStorages = new HashSet<>();
-        Garbage_record garbage_record =new Garbage_record();
-        Set<Garbage_record> garbage_records = new HashSet<>();
-
-
-
-        machineStorages.add(
-                updataStorage(_machine.getMachineStorages(),machine.getMachineStorages())
-        );
-        _machine.setMachineStorages(machineStorages);
-
-
-
-        garbage_record.setMachine_id(_machine);
-        garbage_record.setGarbage_type(
-                garbageTypeService.findByGarbageTypeId(
-                        machine.getGarbage_records().getGarbage_type()
-                )
-        );
-        garbage_record.setWeight(machine.getGarbage_records().getWeight());
-        garbage_record.setUser(_machine.getCurrent_user());
-
-        garbage_records.add(garbage_record);
-        _machine.setGarbage_records(garbage_records);
-
-        _machine.getCurrent_user().getWallet().setChange_value(
-                _machine.getCurrent_user().getWallet().getChange_value().add(
-                        new BigDecimal(garbage_record.getGarbage_type().getUnit_price() * garbage_record.getWeight())
-                )
-        );
-
-
-        return new ResponseEntity<>(machineRepository.save(_machine), HttpStatus.OK);
-    }
-
-    public Machine_storage updataStorage(Set<Machine_storage> machineStorages, Machine_storageDTO machineStorage) {
-        Iterator<Machine_storage> machineStorageIterator = machineStorages.iterator();
-        Machine_storage machineStorageTmp;
-
-        while (machineStorageIterator.hasNext()) {
-            machineStorageTmp = machineStorageIterator.next();
-
-            if (machineStorageTmp.getGarbageType().getId() == machineStorage.getGarbage_type()) {
-                machineStorageTmp.setStorage(machineStorage.getStorage());
-                return machineStorageTmp;
-            }
-
-        }
-        return null;
-
-    }
 
 
 }
-
