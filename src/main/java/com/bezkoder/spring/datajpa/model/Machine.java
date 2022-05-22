@@ -68,6 +68,9 @@ public class Machine {
 
     }
 
+
+
+
     public  void addMachineStorage(Machine_storage machineStorage){
         machineStorage.setMachine(this);
         machineStorages.add(machineStorage);

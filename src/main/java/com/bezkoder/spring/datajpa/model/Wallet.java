@@ -1,5 +1,6 @@
 package com.bezkoder.spring.datajpa.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.Nullable;
@@ -32,6 +33,7 @@ public class Wallet {
     @OneToOne
     @Nullable
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private  User user_id;
 
 //    @Temporal(TemporalType.TIMESTAMP)
@@ -52,4 +54,9 @@ public class Wallet {
         this.description=description;
         this.user_id=user_id;
     }
+
+
+
+
+
 }
