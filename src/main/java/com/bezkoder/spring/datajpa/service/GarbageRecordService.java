@@ -14,8 +14,6 @@ public class GarbageRecordService {
     private GarbageRecordRepository garbageRecordRepository;
 
     public List<Garbage_record> findAll() {
-
-
         List<Garbage_record> garbage_types = new ArrayList<Garbage_record>();
         garbageRecordRepository.findAll().forEach(e -> garbage_types.add(e));
 
@@ -31,4 +29,5 @@ public class GarbageRecordService {
 
         garbageRecordRepository.deleteById(userId);
     }
+
 }

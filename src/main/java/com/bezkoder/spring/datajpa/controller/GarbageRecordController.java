@@ -1,4 +1,5 @@
 package com.bezkoder.spring.datajpa.controller;
+import com.bezkoder.spring.datajpa.model.Garbage_recordDTO;
 import com.bezkoder.spring.datajpa.model.*;
 import com.bezkoder.spring.datajpa.repository.GarbageRecordRepository;
 import com.bezkoder.spring.datajpa.repository.GarbageTypeRepository;

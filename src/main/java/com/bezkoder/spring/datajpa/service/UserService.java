@@ -12,12 +12,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 public class UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private User _user;
+    private Optional<User> userOptional;
 
     @Autowired
     public UserService(UserRepository userRepository,
@@ -68,4 +72,9 @@ public class UserService {
 
     }
 
+
+    public User findUserById(long userId) {
+        userOptional = userRepository.findById(userId);
+        return userOptional.get();
+    }
 }

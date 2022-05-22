@@ -7,7 +7,7 @@ import com.bezkoder.spring.datajpa.model.User;
 import com.bezkoder.spring.datajpa.repository.BankAcctRepository;
 import com.bezkoder.spring.datajpa.repository.BankTypeRepository;
 import com.bezkoder.spring.datajpa.repository.UserRepository;
-import com.bezkoder.spring.datajpa.service.*;
+import com.bezkoder.spring.datajpa.service.BankAcctService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

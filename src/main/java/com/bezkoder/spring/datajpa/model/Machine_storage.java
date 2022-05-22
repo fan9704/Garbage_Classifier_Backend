@@ -1,4 +1,5 @@
 package com.bezkoder.spring.datajpa.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -6,8 +7,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
-@Data
-@Builder
+
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -20,7 +21,8 @@ public class Machine_storage {
     @Column(name = "id")
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "machine")
     private  Machine machine;
 

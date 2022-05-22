@@ -15,11 +15,7 @@ public class GarbageTypeService {
 
     public List<Garbage_type> findAll() {
 
-
-        List<Garbage_type> garbage_types = new ArrayList<Garbage_type>();
-        garbageTypeRepository.findAll().forEach(e -> garbage_types.add(e));
-
-        return garbage_types;
+        return garbageTypeRepository.findAll();
     }
 
     public Long count() {
@@ -30,5 +26,9 @@ public class GarbageTypeService {
     public void deleteById(Long userId) {
 
         garbageTypeRepository.deleteById(userId);
+    }
+
+    public Garbage_type  findByGarbageTypeId(long garbageTypeId){
+        return garbageTypeRepository.findById(garbageTypeId).get();
     }
 }
