@@ -47,5 +47,13 @@ public class Garbage_record {
 //        this.time_stamp = time_stamp;
         this.machine_id = machine_id;
     }
-    //
+
+    public Garbage_record(Garbage_type garbage_type, double weight) {
+        this.garbage_type = garbage_type;
+        this.weight = weight;
+        this.user = user;
+        this.time_stamp = time_stamp;
+
+    }
+
 }
