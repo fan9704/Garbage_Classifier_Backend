@@ -128,27 +128,13 @@ public class MachineStorageService {
         return machine_storages;
     }
 
-    public Long count() {
 
-        return machineStorageRepository.count();
-    }
-
-    public Machine_storage updata(Machine_storage machineStorage){
+    public Machine_storage update(Machine_storage machineStorage){
         return machineStorageRepository.save(machineStorage);
     }
 
     public void deleteById(Long userId) {
 
         machineStorageRepository.deleteById(userId);
-    }
-    public List<Machine_storage> findByMachine(Machine machine){
-        return machineStorageRepository.findByMachine(machine);
-    }
-    public List<Machine_storage> findByGarbageType(Garbage_type garbage_type){
-        return  machineStorageRepository.findByGarbageType(garbage_type);
-    }
-    public  Machine_storage findOneByMachineAndGarbageType(Machine machine,Garbage_type garbage_type){
-         return machineStorageRepository.findOneByMachineAndGarbageType(machine,garbage_type);
-
     }
 }

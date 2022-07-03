@@ -1,17 +1,11 @@
 package com.bezkoder.spring.datajpa.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin

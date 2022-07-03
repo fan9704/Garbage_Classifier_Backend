@@ -21,7 +21,7 @@ public class TransferMoneyRecordController {
     }
     @GetMapping("/transfer_money_record/{id}")
     public ResponseEntity<Transfer_money_record> getTransfer_money_recordById(@PathVariable("id") long id) {
-        return getTransfer_money_recordById(id);
+        return transfer_money_recordService.getTransfer_money_recordById(id);
     }
     @PostMapping("/transfer_money_record")
     public ResponseEntity<Transfer_money_record> createTransfer_money_record(@RequestBody Transfer_money_recordDTO transfer_money_recordDTO) {

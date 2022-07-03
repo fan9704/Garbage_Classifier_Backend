@@ -22,15 +22,6 @@ public class WalletService {
     private WalletRepository walletRepository;
     @Autowired
     private UserRepository userRepository;
-    public ResponseEntity<HashMap<String, BigDecimal>> getCash(int id) {
-        HashMap<String, BigDecimal> res = new HashMap<>();
-        BigDecimal cash = walletRepository.getCurrentCash(id);
-        if (cash == null) {
-            cash = new BigDecimal("0");
-        }
-        res.put("cash", cash);
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
     public ResponseEntity<List<Wallet>> getWalletRecordByUsername(String username){
         try{
             User userData = userRepository.findByUserName(username);
@@ -67,17 +58,6 @@ public class WalletService {
 
         return garbage_types;
     }
-    public List<Wallet> findAllByUserid(long userId){
-        List<Wallet> wallets = new ArrayList<Wallet>();
-        walletRepository.findAllByUserid(userId).forEach(e -> wallets.add(e));
-       return  wallets;
-    }
-
-    public Long count() {
-
-        return walletRepository.count();
-    }
-
     public void deleteById(Long userId) {
 
         walletRepository.deleteById(userId);

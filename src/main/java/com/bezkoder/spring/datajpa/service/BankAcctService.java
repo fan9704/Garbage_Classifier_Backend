@@ -97,8 +97,6 @@ public class  BankAcctService {
         Optional<Bank_acct> bank_acctData = bankAcctRepository.findById(id);
 
         if (bank_acctData.isPresent()) {
-            System.out.println(bank_acct.getBank_type());//Check Variable
-            System.out.println(bank_acct.getAccount_code());
             Bank_acct _bank_acct = bank_acctData.get();
             _bank_acct.setBank_type(bank_acct.getBank_type());
             _bank_acct.setAccount_code(bank_acct.getAccount_code());
@@ -113,17 +111,6 @@ public class  BankAcctService {
         bankAcctRepository.findAll().forEach(e -> bank_accts.add(e));
         return bank_accts;
     }
-//    public List<Bank_acct> findByBankType(Bank_type bank_type){
-//        return bankAcctRepository.findByBankType(bank_type);
-//    }
-    public Bank_acct findOneByUser(User user){
-        return  bankAcctRepository.findOneByUser(user);
-    }
-    public Long count() {
-
-        return bankAcctRepository.count();
-    }
-
     public void deleteById(Long userId) {
 
         bankAcctRepository.deleteById(userId);

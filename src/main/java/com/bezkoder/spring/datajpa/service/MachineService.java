@@ -28,8 +28,6 @@ public class MachineService {
     @Autowired
     private UserService userService;
     @Autowired
-    private MachineStorageService machineStorageService;
-    @Autowired
     private FireBaseService fireBaseService;
 
 
@@ -38,10 +36,13 @@ public class MachineService {
     Base64.Encoder encoder = Base64.getEncoder();
 
 
-    public MachineResponseDTO findMachineById(long mahcineId) throws SQLException {
-        machineOptional = machineRepository.findById(mahcineId);
-
-        return formatMachineResponse(machineOptional.get());
+    public MachineResponseDTO findMachineById(long machineId) throws SQLException {
+        machineOptional = machineRepository.findById(machineId);
+        if (machineOptional.isPresent()){
+            return formatMachineResponse(machineOptional.get());
+        }else{
+            return formatMachineResponse(new Machine());
+        }
     }
 
     public List<MachineResponseDTO> findAll() throws SQLException {
@@ -144,10 +145,6 @@ public class MachineService {
         _machine.setUser_lock(true);
 
         return formatMachineResponse(machineRepository.save(_machine));
-    }
-
-    public Long count() {
-        return machineRepository.count();
     }
 
     public void deleteById(Long machineId) {
