@@ -76,26 +76,13 @@ public class TransferMoneyRecordService {
     }
     //Utils Layer
     public List<Transfer_money_record> findAll() {
-
-
         List<Transfer_money_record> garbage_types = new ArrayList<Transfer_money_record>();
         transferMoneyRecordRepository.findAll().forEach(e -> garbage_types.add(e));
-
         return garbage_types;
     }
-
-    public Long count() {
-
-        return transferMoneyRecordRepository.count();
-    }
-
     public void deleteById(Long userId) {
 
         transferMoneyRecordRepository.deleteById(userId);
     }
 
-//    public void saveRecord(User user, BigDecimal amount){
-//        String accountCode = user.getBank_acct().getAccount_code();
-//        transferMoneyRecordRepository.save(new Transfer_money_record(user,amount,accountCode));
-//    }
 }
