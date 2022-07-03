@@ -67,11 +67,6 @@ public class GarbageTypeService {
         return garbageTypeRepository.findAll();
     }
 
-    public Long count() {
-
-        return garbageTypeRepository.count();
-    }
-
     public void deleteById(Long userId) {
 
         garbageTypeRepository.deleteById(userId);
