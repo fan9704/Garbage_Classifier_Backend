@@ -17,8 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;
@@ -98,7 +96,7 @@ public class UserService {
             String password= userDTO.getPassword();
             String email= userDTO.getEmail();
             Boolean active= userDTO.getActive();
-            User user=new User(username,email,password,name,lastname,active);//,new Set<Role>()
+            User user=new User(username,email,password,name,lastname,active);
             userRepository.save(user);
             walletRepository.save(new Wallet(new BigDecimal("0"),"Create Account",user));
             bankAcctRepository.save(new Bank_acct(null,null,user));
@@ -186,9 +184,6 @@ public class UserService {
 
     }
     //Utils Layer
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
 
     public User findUserByUserName(String userName) {
         return userRepository.findByUserName(userName);
