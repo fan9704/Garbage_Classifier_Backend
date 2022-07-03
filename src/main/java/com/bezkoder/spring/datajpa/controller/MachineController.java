@@ -2,11 +2,6 @@ package com.bezkoder.spring.datajpa.controller;
 
 import com.bezkoder.spring.datajpa.dto.MachineDTO;
 import com.bezkoder.spring.datajpa.dto.MachineResponseDTO;
-import com.bezkoder.spring.datajpa.model.*;
-import com.bezkoder.spring.datajpa.repository.GarbageTypeRepository;
-import com.bezkoder.spring.datajpa.repository.MachineRepository;
-import com.bezkoder.spring.datajpa.repository.MachineStorageRepository;
-import com.bezkoder.spring.datajpa.repository.UserRepository;
 import com.bezkoder.spring.datajpa.service.MachineService;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
