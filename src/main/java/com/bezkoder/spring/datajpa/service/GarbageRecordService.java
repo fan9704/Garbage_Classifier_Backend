@@ -52,11 +52,6 @@ public class GarbageRecordService {
         Optional<Garbage_record> garbage_recordData = garbageRecordRepository.findById(id);
 
         if (garbage_recordData.isPresent()) {
-            System.out.println(garbage_record.getGarbage_type());//Check Variable
-            System.out.println(garbage_record.getWeight());
-            System.out.println(garbage_record.getUser());
-            System.out.println(garbage_record.getTime());
-            System.out.println(garbage_record.getMachine_id());
             Garbage_record _garbage_record = garbage_recordData.get();
             if(garbage_record.getGarbage_type()!=null){
                 _garbage_record.setGarbage_type(garbage_record.getGarbage_type());
@@ -91,9 +86,6 @@ public class GarbageRecordService {
         return garbage_types;
     }
 
-    public Long count() {
-        return garbageRecordRepository.count();
-    }
 
     public void deleteById(Long userId) {
 
