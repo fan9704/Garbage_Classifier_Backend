@@ -17,10 +17,6 @@ import java.util.List;
 public class WalletController {
     @Autowired
     private WalletService walletService;
-    @GetMapping("/cash/{id}")
-    public ResponseEntity<HashMap<String, BigDecimal>> getCash(@PathVariable("id") int id) {
-        return walletService.getCash(id);
-    }
     @GetMapping("/walletInfo/{username}")
     public ResponseEntity<List<Wallet>> getWalletRecordByUsername(@PathVariable("username") String username){
         return walletService.getWalletRecordByUsername(username);
