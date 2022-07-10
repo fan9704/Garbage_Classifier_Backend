@@ -2,6 +2,7 @@ package com.bezkoder.spring.datajpa.service;
 
 
 import com.bezkoder.spring.datajpa.dto.MachineDTO;
+import com.bezkoder.spring.datajpa.dto.MachinePictureDTO;
 import com.bezkoder.spring.datajpa.dto.MachineResponseDTO;
 import com.bezkoder.spring.datajpa.dto.Machine_storageDTO;
 import com.bezkoder.spring.datajpa.model.*;
@@ -11,7 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -88,7 +94,12 @@ public class MachineService {
 
         return formatMachineResponse(_machine);
     }
-
+    public ResponseEntity<MachineResponseDTO> UpdateMachinePicture(long machineId, MultipartFile machinePictureDTO) throws SQLException, IOException {
+        Machine _machine=machineRepository.findById(machineId).get();
+        _machine.setMachinePicture(new SerialBlob(machinePictureDTO.getBytes()));
+        machineRepository.save(_machine);
+        return new ResponseEntity(formatMachineResponse(_machine),HttpStatus.OK);
+    }
     public ResponseEntity linkMachine(long MachineId, long userId) throws SQLException {
 
         _machine = machineRepository.getById(MachineId);
