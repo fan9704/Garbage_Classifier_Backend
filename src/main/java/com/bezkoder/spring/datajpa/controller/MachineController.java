@@ -1,14 +1,18 @@
 package com.bezkoder.spring.datajpa.controller;
 
 import com.bezkoder.spring.datajpa.dto.MachineDTO;
+import com.bezkoder.spring.datajpa.dto.MachinePictureDTO;
 import com.bezkoder.spring.datajpa.dto.MachineResponseDTO;
 import com.bezkoder.spring.datajpa.service.MachineService;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -41,6 +45,10 @@ public class MachineController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @PatchMapping(value ="/machine/picture/{machineId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<MachineResponseDTO> UpdateMachinePicture(@PathVariable("machineId") long machineId, @RequestPart MultipartFile machinePictureDTO) throws SQLException, IOException {
+        return machineService.UpdateMachinePicture(machineId,machinePictureDTO);
     }
     @PatchMapping("/machine/{machineId}/link/{userId}")
     public ResponseEntity<MachineResponseDTO> linkMachine(@PathVariable("machineId") long machineId ,@PathVariable("userId") long userId) throws SQLException {
