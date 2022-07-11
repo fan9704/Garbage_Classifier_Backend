@@ -1,5 +1,10 @@
 package com.bezkoder.spring.datajpa.model;
-import lombok.*;
+import lombok.Data;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -34,12 +39,6 @@ public class Transfer_money_record {
     @Column(name="bank_name")
     private String bank_name;
 
-    public Transfer_money_record(User receiver, BigDecimal amount, Timestamp time_stamp, String bank_name){
-        this.receiver=receiver;
-        this.amount=amount;
-        this.time_stamp=time_stamp;
-        this.bank_name=bank_name;
-    }
     public Transfer_money_record(User receiver, BigDecimal amount, String bank_name) {
         this.receiver = receiver;
         this.amount = amount;

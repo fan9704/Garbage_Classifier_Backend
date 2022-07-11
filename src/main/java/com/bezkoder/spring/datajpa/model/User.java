@@ -2,17 +2,15 @@ package com.bezkoder.spring.datajpa.model;
 
 import javax.persistence.*;
 
-import com.bezkoder.spring.datajpa.model.Wallet;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.firebase.database.annotations.Nullable;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.*;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.math.BigDecimal;
 import java.util.Set;
 
 @Getter
@@ -61,11 +59,6 @@ public class User {
     @JsonManagedReference
     private Wallet wallet;
 
-//    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-//    @JsonManagedReference
-//    @Nullable
-//    private Bank_acct bank_acct;
-
     public User(long id, String userName, String email, String password, String name, String lastName, Boolean active, Set<Role> roles) {
         this.id = id;
         this.userName = userName;
@@ -75,7 +68,6 @@ public class User {
         this.lastName = lastName;
         this.active = active;
         this.roles = roles;
-        new Wallet(new BigDecimal("0"), "Create Account", this);
     }
 
     public User(String userName, String email, String password, String name, String lastName, Boolean active) {
