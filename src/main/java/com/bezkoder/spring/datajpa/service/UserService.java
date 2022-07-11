@@ -164,6 +164,16 @@ public class UserService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    public ResponseEntity<HttpStatus> saveUserToken(long id,String token){
+        try {
+            _user = userRepository.findById(id).get();
+            _user.setFirebaseToken(token);
+            userRepository.save(_user);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     public ResponseEntity<User> putMessage(LoginDTO loginDTO, HttpSession session) {
         try {
 
@@ -183,6 +193,7 @@ public class UserService {
         }
 
     }
+
     //Utils Layer
 
     public User findUserByUserName(String userName) {

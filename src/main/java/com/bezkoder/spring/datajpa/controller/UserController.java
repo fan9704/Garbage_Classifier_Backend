@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bezkoder.spring.datajpa.dto.LoginDTO;
 import com.bezkoder.spring.datajpa.dto.UserDTO;
+import com.bezkoder.spring.datajpa.dto.UserTokenDTO;
 import com.bezkoder.spring.datajpa.model.*;
 import com.bezkoder.spring.datajpa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,11 @@ public class UserController {
     @PostMapping("/put_message")
     public ResponseEntity<User> putMessage(@RequestBody LoginDTO loginDTO, HttpSession session) {
         return userService.putMessage(loginDTO,session);
+    }
+
+    @PostMapping("/saveToken")
+    public ResponseEntity<HttpStatus> saveToken(@RequestBody UserTokenDTO userTokenDTO){
+        return userService.saveUserToken(userTokenDTO.getId(),userTokenDTO.getFirebaseToken());
     }
 
 }

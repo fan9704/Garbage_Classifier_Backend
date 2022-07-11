@@ -1,10 +1,12 @@
 package com.bezkoder.spring.datajpa.dto;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class LinkMachineDTO {

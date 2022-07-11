@@ -2,7 +2,8 @@
 package com.bezkoder.spring.datajpa.dto;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import java.sql.Blob;
 
 
@@ -10,7 +11,7 @@ import java.sql.Blob;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MachineUpdateDTO {//TODO:apply in MachineController
+public class MachineUpdateDTO {
 
     private String location;
     private boolean user_lock;

@@ -1,7 +1,11 @@
 package com.bezkoder.spring.datajpa.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.lang.Nullable;
 
@@ -24,18 +28,16 @@ public class Wallet {
 
     @Nullable
     @Column(name = "change_value")
-    private BigDecimal change_value;//"- transfer money {transfer account}" "+ recycle {recycle_type} add {total_amount}"
+    private BigDecimal change_value;
 
     @Column(name = "description")
     private String description;
 
     @OneToOne
-    @Nullable
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private  User user_id;
 
-//    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp//Use Create time
     @Column(name= "time_stamp")
     @Nullable
@@ -53,9 +55,4 @@ public class Wallet {
         this.description=description;
         this.user_id=user_id;
     }
-
-
-
-
-
 }

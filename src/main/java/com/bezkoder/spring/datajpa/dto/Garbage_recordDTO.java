@@ -2,12 +2,8 @@ package com.bezkoder.spring.datajpa.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
-
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Setter

@@ -1,6 +1,9 @@
 package com.bezkoder.spring.datajpa.model;
-import lombok.*;
-
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 @Getter
 @Setter
