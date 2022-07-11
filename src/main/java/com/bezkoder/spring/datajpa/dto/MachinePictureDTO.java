@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Lob;
 import java.sql.Blob;
 
 @AllArgsConstructor
@@ -13,6 +12,5 @@ import java.sql.Blob;
 @Setter
 @NoArgsConstructor
 public class MachinePictureDTO {
-    @Lob
     private Blob machinePicture;
 }
