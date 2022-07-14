@@ -148,6 +148,12 @@
 			<version>2.2.4</version>
 		</dependency>
 		<!--WebJar-->
+		<!--Micrometer-->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+		<!--Micrometer-->
     </dependencies>
 
 	<build>
