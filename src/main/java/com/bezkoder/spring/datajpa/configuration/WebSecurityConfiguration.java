@@ -42,14 +42,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     };
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.
-//                authorizeRequests()
-//                .antMatchers("/").permitAll()
-//                .antMatchers(AUTH_WHITELIST).permitAll()
-//                .antMatchers("/admin/**").hasAuthority("ADMIN")
-//                .anyRequest()
-//                .authenticated()
-//                .and().csrf().disable();
+        http.
+                authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .anyRequest()
+                .authenticated()
+                .and().csrf().disable();
     }
 
     @Override
