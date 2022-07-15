@@ -33,19 +33,19 @@ public class BankAcctController {
         return bank_acctService.createBank_acct(bank_acctDTO);
     }
     @PatchMapping("/bank_acct/{id}")
-    public ResponseEntity<Bank_acct> patchBank_type(@PathVariable("id") long id, @RequestBody Bank_acct bank_acct) {
-        return bank_acctService.patchBank_type(id,bank_acct);
+    public ResponseEntity<Bank_acct> patchBank_acct(@PathVariable("id") long id, @RequestBody Bank_acct bank_acct) {
+        return bank_acctService.patchBank_acct(id,bank_acct);
     }
-    @PatchMapping("/bank_acct/user/")
+    @PatchMapping("/bank_acct/user")
     public ResponseEntity<Bank_acct> patchUserBankAcct(@RequestBody Bank_acctDTO bank_acctDTO) {
         return bank_acctService.patchUserBankAcct(bank_acctDTO);
     }
     @PutMapping("/bank_acct/{id}")
-    public ResponseEntity<Bank_acct> updateBank_type(@PathVariable("id") long id, @RequestBody Bank_acct bank_acct) {
-        return bank_acctService.updateBank_type(id,bank_acct);
+    public ResponseEntity<Bank_acct> updateBank_acct(@PathVariable("id") long id, @RequestBody Bank_acct bank_acct) {
+        return bank_acctService.updateBank_acct(id,bank_acct);
     }
     @DeleteMapping("/bank_acct/{id}")
-    public void delete(@PathVariable String id) {
-        bank_acctService.deleteById(Long.parseLong(id));
+    public ResponseEntity<String> delete(@PathVariable String id) {
+        return bank_acctService.deleteById(Long.parseLong(id));
     }
 }

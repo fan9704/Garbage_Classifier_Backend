@@ -60,7 +60,7 @@ public class  BankAcctService {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    public ResponseEntity<Bank_acct> patchBank_type(long id,Bank_acct bank_acct) {
+    public ResponseEntity<Bank_acct> patchBank_acct(long id,Bank_acct bank_acct) {
         Optional<Bank_acct> bank_acctData = bankAcctRepository.findById(id);
 
         if (bank_acctData.isPresent()) {
@@ -93,7 +93,7 @@ public class  BankAcctService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    public ResponseEntity<Bank_acct> updateBank_type(long id,Bank_acct bank_acct) {
+    public ResponseEntity<Bank_acct> updateBank_acct(long id,Bank_acct bank_acct) {
         Optional<Bank_acct> bank_acctData = bankAcctRepository.findById(id);
 
         if (bank_acctData.isPresent()) {
@@ -111,8 +111,8 @@ public class  BankAcctService {
         bankAcctRepository.findAll().forEach(e -> bank_accts.add(e));
         return bank_accts;
     }
-    public void deleteById(Long userId) {
-
+    public ResponseEntity<String> deleteById(Long userId) {
         bankAcctRepository.deleteById(userId);
+        return new ResponseEntity<>("Delete Complete", HttpStatus.OK);
     }
 }
