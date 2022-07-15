@@ -8,6 +8,7 @@ class SpringBootDataJpaApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("Complete Load Main Class");
 	}
 
 }
