@@ -1,12 +1,9 @@
 package com.bezkoder.spring.datajpa.controller;
 
 import com.bezkoder.spring.datajpa.dto.Bank_acctDTO;
-import com.bezkoder.spring.datajpa.model.Bank_acct;
-import com.bezkoder.spring.datajpa.model.Bank_type;
-import com.bezkoder.spring.datajpa.model.Role;
-import com.bezkoder.spring.datajpa.model.User;
+import com.bezkoder.spring.datajpa.model.*;
+import com.bezkoder.spring.datajpa.repository.BankAcctRepository;
 import com.bezkoder.spring.datajpa.service.BankAcctService;
-import com.bezkoder.spring.datajpa.service.BankTypeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,32 +14,21 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 @RunWith(MockitoJUnitRunner.class)
@@ -54,6 +40,8 @@ class BankAcctControllerTest {
     private BankAcctController bankAcctController;
     @Mock
     private BankAcctService bankAcctService;
+//    @Mock
+//    private BankAcctRepository bankAcctRepository;
 
     @BeforeEach
     public void setUp(){
@@ -92,7 +80,7 @@ class BankAcctControllerTest {
 
         String jsonInput = this.convertToJson(b1);
 
-        Mockito.when(bankAcctService.getBank_acctByUsername("user1")).thenReturn(new ResponseEntity<>( b1, HttpStatus.OK));
+        Mockito.when(bankAcctService.getBank_acctByUsername(anyString())).thenReturn(new ResponseEntity<>( b1, HttpStatus.OK));
         MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.get(URI).accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
@@ -111,7 +99,7 @@ class BankAcctControllerTest {
 
         String jsonInput = this.convertToJson(b1);
 
-        Mockito.when(bankAcctService.getBank_acctById(1)).thenReturn(new ResponseEntity<>( b1, HttpStatus.OK));
+        Mockito.when(bankAcctService.getBank_acctById(anyLong())).thenReturn(new ResponseEntity<>( b1, HttpStatus.OK));
         MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.get(URI).accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
@@ -129,8 +117,7 @@ class BankAcctControllerTest {
         Bank_acctDTO bank_acctDTO = new Bank_acctDTO(1,"000",1);
         String InputDTO = this.convertToJson(bank_acctDTO);
         String jsonInput = this.convertToJson(b1);
-
-//        Mockito.when(bankAcctService.createBank_acct(any())).thenReturn(new ResponseEntity<>(b1, HttpStatus.CREATED));
+        Mockito.when(bankAcctService.createBank_acct(any())).thenReturn(new ResponseEntity<>(b1, HttpStatus.CREATED));
         MvcResult mvcResult = this.mockMvc.perform(post(URI)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(InputDTO)
