@@ -3,7 +3,6 @@ package com.bezkoder.spring.datajpa.controller;
 import com.bezkoder.spring.datajpa.dto.Transfer_money_recordDTO;
 import com.bezkoder.spring.datajpa.model.Transfer_money_record;
 import com.bezkoder.spring.datajpa.model.User;
-import com.bezkoder.spring.datajpa.service.GarbageTypeService;
 import com.bezkoder.spring.datajpa.service.TransferMoneyRecordService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +30,6 @@ import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -113,9 +111,9 @@ class TransferMoneyRecordControllerTest {
                                 .characterEncoding("utf-8")
                                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                                .content(convertToJson(null))
+                                .content(convertToJson(transfer_money_recordDTO))
                 )
-//                .andExpect(status().isCreated())
+                .andExpect(status().isCreated())
                 .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         String jsonInput = this.convertToJson(t1);
@@ -123,7 +121,7 @@ class TransferMoneyRecordControllerTest {
 
         System.out.println("Input:"+jsonInput);
         System.out.println("Output:"+jsonOutput);
-//        assertThat(jsonInput).isEqualTo(jsonOutput);
+        assertThat(jsonInput).isEqualTo(jsonOutput);
 
         System.out.println("Create Pass");
     }
@@ -139,9 +137,9 @@ class TransferMoneyRecordControllerTest {
                                 .characterEncoding("utf-8")
                                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                                .content(convertToJson(null))
+                                .content(convertToJson(transfer_money_recordDTO))
                 )
-//                .andExpect(status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         String jsonInput = this.convertToJson(t1);
@@ -149,7 +147,7 @@ class TransferMoneyRecordControllerTest {
 
         System.out.println("Input:"+jsonInput);
         System.out.println("Output:"+jsonOutput);
-//        assertThat(jsonInput).isEqualTo(jsonOutput);
+        assertThat(jsonInput).isEqualTo(jsonOutput);
 
         System.out.println("Patch Pass");
     }
@@ -165,9 +163,9 @@ class TransferMoneyRecordControllerTest {
                                 .characterEncoding("utf-8")
                                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                                .content(convertToJson(null))
+                                .content(convertToJson(transfer_money_recordDTO))
                 )
-//                .andExpect(status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         String jsonInput = this.convertToJson(t1);
@@ -175,7 +173,7 @@ class TransferMoneyRecordControllerTest {
 
         System.out.println("Input:"+jsonInput);
         System.out.println("Output:"+jsonOutput);
-//        assertThat(jsonInput).isEqualTo(jsonOutput);
+        assertThat(jsonInput).isEqualTo(jsonOutput);
 
         System.out.println("Put Pass");
     }
@@ -189,7 +187,7 @@ class TransferMoneyRecordControllerTest {
                                 .accept(MediaType.APPLICATION_JSON_UTF8_VALUE)
                                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 )
-//                .andExpect(status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
         MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
         String jsonInput = this.convertToJson(t1);
@@ -197,7 +195,6 @@ class TransferMoneyRecordControllerTest {
 
         System.out.println("Input:"+jsonInput);
         System.out.println("Output:"+jsonOutput);
-//        assertThat(jsonInput).isEqualTo(jsonOutput);
 
         System.out.println("Delete Pass");
     }
