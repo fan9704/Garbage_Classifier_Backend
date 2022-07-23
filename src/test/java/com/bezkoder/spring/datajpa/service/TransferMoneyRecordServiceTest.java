@@ -131,7 +131,7 @@ class TransferMoneyRecordServiceTest {
     }
 
     @Test
-    void deleteById() throws Exception{
+    void deleteById() {
         transferMoneyRecordService.deleteById(1L);
         verify(transferMoneyRecordRepository).deleteById(anyLong());
 
