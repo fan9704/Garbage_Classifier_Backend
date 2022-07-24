@@ -25,6 +25,7 @@ public class MachineStorageService {
     private MachineRepository machineRepository;
     @Autowired
     private GarbageTypeRepository garbageTypeRepository;
+
     public ResponseEntity<Machine_storage> getMachine_storageById(long id) {
         Optional<Machine_storage> machine_storageData = machineStorageRepository.findById(id);
         if ( machine_storageData.isPresent()) {
@@ -40,11 +41,11 @@ public class MachineStorageService {
             if(machineData.isPresent()){
                 machine_storageData = machineStorageRepository.findByMachine(machineData.get());
             }else{
-                machine_storageData = new ArrayList<Machine_storage>();
+                machine_storageData = new ArrayList<>();
             }
             return machine_storageData;
         }catch (Exception e){
-            List<Machine_storage> machine_storageData =new ArrayList<Machine_storage>();
+            List<Machine_storage> machine_storageData = new ArrayList<>();
             return machine_storageData;
         }
     }
@@ -55,11 +56,11 @@ public class MachineStorageService {
             if(garbage_typeData.isPresent()){
                 machine_storageData = machineStorageRepository.findByGarbageType(garbage_typeData.get());
             }else{
-                machine_storageData = new ArrayList<Machine_storage>();
+                machine_storageData = new ArrayList<>();
             }
             return machine_storageData;
         }catch (Exception e){
-            List<Machine_storage> machine_storageData =new ArrayList<Machine_storage>();
+            List<Machine_storage> machine_storageData = new ArrayList<>();
             return machine_storageData;
         }
     }
@@ -122,16 +123,12 @@ public class MachineStorageService {
     }
     //Utils Layer
     public List<Machine_storage> findAll() {
-        List<Machine_storage> machine_storages = new ArrayList<Machine_storage>();
+        List<Machine_storage> machine_storages = new ArrayList<>();
         machineStorageRepository.findAll().forEach(e -> machine_storages.add(e));
 
         return machine_storages;
     }
 
-
-    public Machine_storage update(Machine_storage machineStorage){
-        return machineStorageRepository.save(machineStorage);
-    }
 
     public void deleteById(Long userId) {
 
