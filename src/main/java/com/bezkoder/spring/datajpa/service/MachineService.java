@@ -229,7 +229,7 @@ public class MachineService {
 
     }
 
-    private MachineResponseDTO formatMachineResponse(Machine _machine) throws SQLException {
+    public MachineResponseDTO formatMachineResponse(Machine _machine) throws SQLException {
         MachineResponseDTO machine = new MachineResponseDTO(
                 _machine.getId(),
                 _machine.getLocation(),
