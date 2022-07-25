@@ -1,7 +1,6 @@
 package com.bezkoder.spring.datajpa.controller;
 
 import com.bezkoder.spring.datajpa.dto.MachineDTO;
-import com.bezkoder.spring.datajpa.dto.MachinePictureDTO;
 import com.bezkoder.spring.datajpa.dto.MachineResponseDTO;
 import com.bezkoder.spring.datajpa.service.MachineService;
 import com.google.firebase.messaging.FirebaseMessagingException;
