@@ -47,7 +47,7 @@ public class UserService {
     }
     public ResponseEntity<List<User>> getAllUsers(){
         try {
-            List<User> users = new ArrayList<User>();
+            List<User> users = new ArrayList<>();
             userRepository.findAll().forEach(users::add);
             if (users.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -68,7 +68,7 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<User> getUserById( String username) {
+    public ResponseEntity<User> getUserByUsername( String username) {
         User userData = userRepository.findByUserName(username);
 
         if (userData!=null) {
@@ -96,8 +96,7 @@ public class UserService {
             String password= userDTO.getPassword();
             String email= userDTO.getEmail();
             Boolean active= userDTO.getActive();
-            User user=new User(username,email,password,name,lastname,active);
-            userRepository.save(user);
+            User user =userRepository.save(new User(username,email,password,name,lastname,active));
             walletRepository.save(new Wallet(new BigDecimal("0"),"Create Account",user));
             bankAcctRepository.save(new Bank_acct(null,null,user));
             return new ResponseEntity<>(user, HttpStatus.CREATED);

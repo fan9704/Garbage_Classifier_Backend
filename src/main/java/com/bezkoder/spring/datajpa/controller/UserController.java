@@ -33,7 +33,7 @@ public class UserController {
 
     @GetMapping("/userinfo/{username}")
     public ResponseEntity<User> getUserById(@PathVariable("username") String username) {
-        return userService.getUserById(username);
+        return userService.getUserByUsername(username);
     }
     @GetMapping("/checkLogin")
     public ResponseEntity<User> checkUserLogin(HttpSession session, SessionStatus sessionStatus){
