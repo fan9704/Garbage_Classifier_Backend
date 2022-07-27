@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/userinfo/{username}")
-    public ResponseEntity<User> getUserById(@PathVariable("username") String username) {
+    public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
         return userService.getUserByUsername(username);
     }
     @GetMapping("/checkLogin")
