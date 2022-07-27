@@ -130,6 +130,10 @@ public class MachineStorageService {
     }
 
 
+    public Machine_storage updata(Machine_storage machineStorage){
+        return machineStorageRepository.save(machineStorage);
+    }
+
     public void deleteById(Long userId) {
 
         machineStorageRepository.deleteById(userId);
