@@ -1,18 +1,27 @@
 package com.bezkoder.spring.datajpa.service;
 
 
+import com.bezkoder.spring.datajpa.dto.LoginDTO;
+import com.bezkoder.spring.datajpa.model.Bank_acct;
 import com.bezkoder.spring.datajpa.model.Role;
 import com.bezkoder.spring.datajpa.model.User;
-import com.bezkoder.spring.datajpa.model.UserDTO;
+import com.bezkoder.spring.datajpa.dto.UserDTO;
+import com.bezkoder.spring.datajpa.model.Wallet;
+import com.bezkoder.spring.datajpa.repository.BankAcctRepository;
 import com.bezkoder.spring.datajpa.repository.RoleRepository;
 import com.bezkoder.spring.datajpa.repository.UserRepository;
+import com.bezkoder.spring.datajpa.repository.WalletRepository;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
+import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -22,7 +31,12 @@ public class UserService {
 
     private User _user;
     private Optional<User> userOptional;
-
+    @Autowired
+    private WalletRepository walletRepository;
+    @Autowired
+    private BankAcctRepository bankAcctRepository;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
     @Autowired
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
@@ -31,10 +45,155 @@ public class UserService {
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+    public ResponseEntity<List<User>> getAllUsers(){
+        try {
+            List<User> users = new ArrayList<>();
+            userRepository.findAll().forEach(users::add);
+            if (users.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
 
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+    public ResponseEntity<User> getUserById( long id) {
+        Optional<User> userData = userRepository.findById(id);
+
+        if (userData.isPresent()) {
+            return new ResponseEntity<>(userData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public ResponseEntity<User> getUserByUsername( String username) {
+        User userData = userRepository.findByUserName(username);
+
+        if (userData!=null) {
+            return new ResponseEntity<>(userData, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public ResponseEntity<User> checkUserLogin(HttpSession session, SessionStatus sessionStatus){
+        String sessionUsername=session.getAttribute("username").toString();
+        System.out.println(sessionUsername);
+        if(session.getAttribute("username") != null){
+            User user=userRepository.findByUserName(sessionUsername);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    public ResponseEntity<User> registerUser(UserDTO userDTO) {
+        try {
+            String username= userDTO.getUserName();
+            String name= userDTO.getName();
+            String lastname= userDTO.getLastName();
+            String password= userDTO.getPassword();
+            String email= userDTO.getEmail();
+            Boolean active= userDTO.getActive();
+            User user =userRepository.save(new User(username,email,password,name,lastname,active));
+            walletRepository.save(new Wallet(new BigDecimal("0"),"Create Account",user));
+            bankAcctRepository.save(new Bank_acct(null,null,user));
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    public ResponseEntity<User> loginUser(LoginDTO loginDTO, HttpSession session) {
+        try {
+            String username= loginDTO.getUsername();
+            String password= loginDTO.getPassword();
+            User userData = userRepository.findByUserName(username);
+            String _password=userData.getPassword();
+            if (this.loginUser(_password,password)) {
+                session.setAttribute("username", username);
+                return new ResponseEntity<>(userData, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+    public ResponseEntity<String> userLogout(HttpSession session, SessionStatus sessionStatus){
+        if(session.getAttribute("username") != null){
+            session.removeAttribute("username");
+            sessionStatus.setComplete();
+            return new ResponseEntity<>("Logout", HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Not Logout",HttpStatus.NOT_FOUND);
+        }
+    }
+    public ResponseEntity<User> changePassword(LoginDTO loginDTO){
+        try{
+            String username=loginDTO.getUsername();
+            String password=loginDTO.getPassword();
+            User userData=this.changePassword(username,password);
+            return new ResponseEntity<>(userData, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    public ResponseEntity<User> EditUserInfo(UserDTO userDTO){
+        try{
+            User _user=this.EditUserProfile(userDTO);
+            return new ResponseEntity<>(_user,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    public ResponseEntity<HttpStatus> deleteUser(long id) {
+        try {
+            userRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    public ResponseEntity<HttpStatus> deleteAllUsers() {
+        try {
+            userRepository.deleteAll();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    public ResponseEntity<HttpStatus> saveUserToken(long id,String token){
+        try {
+            _user = userRepository.findById(id).get();
+            _user.setFirebaseToken(token);
+            userRepository.save(_user);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    public ResponseEntity<User> putMessage(LoginDTO loginDTO, HttpSession session) {
+        try {
+
+            String username= loginDTO.getUsername();
+            String password= loginDTO.getPassword();
+            User userData = userRepository.findByUserName(username);
+            String _password=userData.getPassword();
+            rabbitTemplate.convertAndSend("tpu.queue", userData);
+            if (this.loginUser(_password,password)) {
+                session.setAttribute("username", username);
+                return new ResponseEntity<>(userData, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+
+    }
+
+    //Utils Layer
 
     public User findUserByUserName(String userName) {
         return userRepository.findByUserName(userName);
@@ -71,7 +230,6 @@ public class UserService {
         }
 
     }
-
 
     public User findUserById(long userId) {
         userOptional = userRepository.findById(userId);

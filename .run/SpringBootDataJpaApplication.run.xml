@@ -3,7 +3,7 @@
     <option name="ALTERNATIVE_JRE_PATH" value="temurin-17" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <option name="MAIN_CLASS_NAME" value="com.bezkoder.spring.datajpa.SpringBootDataJpaApplication" />
-    <module name="spring-boot-data-jpa" />
+    <module name="Garbage_Classifier_Backend" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.bezkoder.spring.datajpa.*" />

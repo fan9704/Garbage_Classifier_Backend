@@ -1,17 +1,18 @@
 package com.bezkoder.spring.datajpa.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
 
-@Data
+@Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Getter
-@Setter
 @Table(name = "Garbage_type")
 public class Garbage_type {
 //    @JsonIgnore

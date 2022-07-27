@@ -2,24 +2,22 @@ package com.bezkoder.spring.datajpa.model;
 
 import javax.persistence.*;
 
-import com.bezkoder.spring.datajpa.model.Wallet;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.firebase.database.annotations.Nullable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.*;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.math.BigDecimal;
 import java.util.Set;
 
 @Getter
 @Setter
-@Data
-
-//@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -49,18 +47,19 @@ public class User {
     private String lastName;
     @Column(name = "active")
     private Boolean active;
+
+    @Column(name = "firebase_token")
+    @Nullable
+    private String firebaseToken;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id",columnDefinition = "int default 0"))
     private Set<Role> roles;
 
-//    @OneToOne
-//    @JoinColumn(name = "bank_acct_id")
-//    private Bank_acct bank_acct;
 
     @OneToOne(mappedBy = "user_id",cascade = CascadeType.ALL)
     @JsonManagedReference
     private Wallet wallet;
-
 
     public User(long id, String userName, String email, String password, String name, String lastName, Boolean active, Set<Role> roles) {
         this.id = id;
@@ -71,7 +70,6 @@ public class User {
         this.lastName = lastName;
         this.active = active;
         this.roles = roles;
-        new Wallet(new BigDecimal("0"), "Create Account", this);
     }
 
     public User(String userName, String email, String password, String name, String lastName, Boolean active) {

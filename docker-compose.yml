@@ -1,0 +1,40 @@
+version: "3.7"
+services:
+  backend:
+    image: garbage_classifier
+    env_file: ./.env
+    build: .
+    restart: always
+#    environment:
+#      SPRING_APPLICATION_JSON: '{
+#        "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
+#        "spring.datasource.username" : "$MYSQLDB_USER",
+#        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+#        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+#        "spring.jpa.hibernate.ddl-auto" : "update"
+#      }'
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      - "mysql"
+  mysql:
+    image: mysql
+    env_file: ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: "AvenParking"
+      MYSQL_DATABASE: "garbage_classifier"
+      MYSQL_USER: "test"
+      MYSQL_PASSWORD: "123456"
+      MYSQL_TCP_PORT: 3306
+    ports:
+      - 3307:3306
+    expose:
+      - 3307
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - "127.0.0.1:9100:80"
+    environment:
+      - PMA_HOST=mysql
+    depends_on:
+      - "mysql"
