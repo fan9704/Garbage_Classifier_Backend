@@ -1,11 +1,25 @@
+<span style="text-align: center">
+
 # Garbage Classifier Backend
 ### Yuntech Information management department System Analysis and Design G6 Teamwork
 
+![](https://img.shields.io/github/languages/top/fan9704/Garbage_Classifier_Backend?logo=openjdk&logoColor=%23FFFFFF&style=for-the-badge)
+![](https://img.shields.io/github/languages/count/fan9704/Garbage_Classifier_Backend?color=%23005A2B&style=for-the-badge)
+
+</span>
+
+
 ----
 
-[Web Interface Page SwaggerUI](http://localhost:8080/swagger-ui/index.html)
+
+[Local Web Interface Page SwaggerUI](http://localhost:8080/swagger-ui/index.html)
 
 [Remote Web Interface Page SwaggerUI](http://140.125.207.230:8080/swagger-ui/index.html)
+
+[Server Manage Interface Prometheus Panel](http://140.125.207.230:9090/)
+
+[Server Manage Interface Garfana Panel](http://140.125.207.230:4000/)
+
 
 ----
 
@@ -46,39 +60,20 @@ Distribute System Use Messaging Queue
 
 #### Spring Boot JPA MySQL - Building Rest CRUD API
 
-For more detail, please visit:
-> [Spring Boot JPA + MySQL - Building Rest CRUD API example](https://www.bezkoder.com/spring-boot-jpa-crud-rest-api/)
 
 More Practice:
-> [Spring Boot File upload example with Multipart File](https://www.bezkoder.com/spring-boot-file-upload/)
-
 > [Spring Boot Pagination & Filter example | Spring JPA, Pageable](https://www.bezkoder.com/spring-boot-pagination-filter-jpa-pageable/)
 
 > [Spring Data JPA Sort/Order by multiple Columns | Spring Boot](https://www.bezkoder.com/spring-data-sort-multiple-columns/)
 
 > [Spring Boot Repository Unit Test with @DataJpaTest](https://www.bezkoder.com/spring-boot-unit-test-jpa-repo-datajpatest/)
 
-Associations:
-> [Spring Boot One To Many example with Spring JPA, Hibernate](https://www.bezkoder.com/jpa-one-to-many/)
-
-> [Spring Boot Many To Many example with Spring JPA, Hibernate](https://www.bezkoder.com/jpa-many-to-many/)
-
-Security:
-> [Spring Boot + Spring Security JWT Authentication & Authorization](https://www.bezkoder.com/spring-boot-jwt-authentication/)
-
 Deployment:
 > [Deploy Spring Boot App on AWS – Elastic Beanstalk](https://bezkoder.com/deploy-spring-boot-aws-eb/)
 
-> [Docker Compose Spring Boot and MySQL example](https://www.bezkoder.com/docker-compose-spring-boot-mysql/)
-
-Fullstack:
-> [Vue.js + Spring Boot + MySQL example](https://bezkoder.com/spring-boot-vue-js-mysql/)
-
-> [Vue.js + Spring Boot + PostgreSQL example](https://bezkoder.com/spring-boot-vue-js-postgresql/)
-
 ----
 
-### Web Interface Detail
+### Web Interface Detail (Port number 8080)
 #### User
 - User Register Post:/api/register
 - User Login Post:/api/login
@@ -87,11 +82,11 @@ Fullstack:
 - User EditUserInfo Put:/api/EditUserInfo
 - Check UserLoginStatus /Get:/api/checkLogin
 - User Logout /Get:/api/logout
+- Save User Firebase Cloud Messaging Token Post:/api/saveToken
 - **Register Api Will auto create user wallet and account**
 #### Wallet
 - Get WalletValueByUsername Get:/api/walletValue/{username}
 - List WalletInfoByUsername Get:/api/walletInfo/{username}
-- Create WalletRecord Post:/api/wallet
 #### Machine
 - Get All Machines By Location Get:/api/machines/location?location={location}
 - Link User Machine Patch:/api/machine/{machineId}/link/{userId}
@@ -99,6 +94,7 @@ Fullstack:
 - Lock Machine Patch:/machine/lock/{machineId}
 - Unlock Machine Patch:/machine/unlock/{machineId}
 - Update Recycle Record Patch:/api/machine/{machineId}
+- Update Machine Picture Patch:/api/machine/picture/{machineId}
 - **Create Machine Will Auto Create Any Garbage Type Of Machine Storage Data**
 #### MachineStorage
 - Update MachineStorage Patch:/api/machine_storage
@@ -114,6 +110,9 @@ Fullstack:
 - Delete something Delete:/api/something/{ID}
 - Read all something GET:/api/somethings
 - Update piece of something Patch:/api/something/{ID}
+
+### Manager Server Interface (Port number 8000)
+Use Actuator and Micrometer
 
 ----
 
