@@ -21,21 +21,14 @@ public class SwaggerConfiguration {
     @Bean
     public Docket createRestApi() {
         return new Docket(
-                // 设置使用 OpenApi 3.0 规范
                 DocumentationType.OAS_30)
                 .enable(enabled)
                 .apiInfo(apiInfo())
-                // 设置项目组名
-                //.groupName("xxx组")
-                // 选择那些路径和api会生成document
+                .groupName("Group")
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                // 如果需要指定对某个包的接口进行监控，则可以配置如下
-                //.apis(RequestHandlerSelectors.basePackage("mydlq.swagger.example.controller"))
                 .paths(PathSelectors.any())
-                // 忽略以"/error"开头的路径,可以防止显示如404错误接口
                 .paths(PathSelectors.regex("/error.*").negate())
-                // 忽略以"/actuator"开头的路径
                 .paths(PathSelectors.regex("/actuator.*").negate())
                 .build();
     }
