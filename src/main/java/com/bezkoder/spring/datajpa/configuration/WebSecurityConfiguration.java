@@ -36,8 +36,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/websocket/**",
             //API Tunnel
             "/api/**",
-            //System Actuator
-            "/actuator/**",
+            //GraphiQL
+            "/graphiql/**",
+            "/vendor/**",
+            "/subscriptions/**"
 
     };
     @Override
