@@ -1,12 +1,15 @@
 package com.bezkoder.spring.datajpa;
 
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+@EnableAdminServer
 @EnableSwagger2
 @EnableWebMvc
 @SpringBootApplication
