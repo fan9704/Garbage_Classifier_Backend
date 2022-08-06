@@ -1,0 +1,13 @@
+type BankType {
+	id: ID
+	bank_name: String
+	bank_code: String
+}
+extend type Query {
+	findAllBankType: [BankType]!
+}
+extend type Mutation {
+	createBankType(bank_name: String! bank_code: String): BankType!
+	updateBankType(id: ID!, bank_name: String!, bank_code: String): BankType!
+	deleteBankType(id: ID!): Boolean
+}
