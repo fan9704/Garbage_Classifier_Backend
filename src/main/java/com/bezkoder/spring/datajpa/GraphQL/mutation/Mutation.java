@@ -19,16 +19,18 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private BankTypeRepository bankTypeRepository;
 
+    @Autowired
+    private  UserRepository userRepository;
 
 
     public Bank_type createBankType(String bank_name, String bank_code) {
         return bankTypeRepository.save(new Bank_type(bank_name,bank_code));
     }
-    public boolean deleteBankType(Long id) {
+    public boolean deleteBankType(long id) {
         bankTypeRepository.deleteById(id);
         return true;
     }
-    public Bank_type updateBankType(Long id, String bank_name, String bank_code) throws Exception {
+    public Bank_type updateBankType(long id, String bank_name, String bank_code) throws Exception {
         Optional<Bank_type> BankTypeOptional = bankTypeRepository.findById(id);
         if (BankTypeOptional.isPresent()) {
             Bank_type bankType = BankTypeOptional.get();
@@ -43,5 +45,12 @@ public class Mutation implements GraphQLMutationResolver {
         }
     }
 
-
+    public User findUserById(long id){
+        Optional<User> UserOptional = userRepository.findById(id);
+        if(UserOptional.isPresent()){
+            return  UserOptional.get();
+        }else{
+            return null;
+        }
+    }
 }
