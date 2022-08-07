@@ -1,0 +1,17 @@
+type User {
+    id: ID
+    userName: String
+    email: String
+    password:String
+    name:String
+    lastName:String
+    active:Boolean
+    firebaseToken:String
+}
+type Query {
+    findAllUser: [User]!
+
+}
+type Mutation{
+    findUserById(id:ID):User!
+}
