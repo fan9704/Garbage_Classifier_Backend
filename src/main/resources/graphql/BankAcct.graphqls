@@ -1,0 +1,14 @@
+type BankAcct {
+    id: ID
+    bankType: BankType
+    account_code: String
+    user:User
+}
+extend type Query {
+    findAllBankAcct: [BankAcct]!
+}
+#extend type Mutation {
+#    createBankAcct(bankType: ID! AccountCode: String,user:ID): BankAcct!
+#    updateBankAcctByUser(bankType: ID! AccountCode: String,user:ID): BankAcct!
+#    deleteBankAcct(id: ID!): Boolean
+#}
