@@ -17,14 +17,17 @@ import java.util.List;
 public class Query implements GraphQLQueryResolver{
     @Autowired
     private BankTypeRepository bankTypeRepository;
-
+    @Autowired
+    private BankAcctRepository bankAcctRepository;
     @Autowired
     private UserRepository userRepository;
 
     public List<Bank_type> findAllBankType() {
         return bankTypeRepository.findAll();
     }
-
+    public List<Bank_acct> findAllBankAcct() {
+        return bankAcctRepository.findAll();
+    }
     public List<User> findAllUser() {
         return userRepository.findAll();
     }
