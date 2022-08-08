@@ -18,7 +18,8 @@ import java.util.Optional;
 public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private BankTypeRepository bankTypeRepository;
-
+    @Autowired
+    private BankAcctRepository bankAcctRepository;
     @Autowired
     private  UserRepository userRepository;
 
@@ -42,6 +43,33 @@ public class Mutation implements GraphQLMutationResolver {
             return bankType;
         }else{
             throw new Exception("Not Found BankType");
+        }
+    }
+
+    public Bank_acct createBankAcct(long bankType, String AccountCode,long userId) {
+        Optional<Bank_type> BankTypeOptional = bankTypeRepository.findById(bankType);
+        Optional<User> UserOptional = userRepository.findById(userId);
+        if(BankTypeOptional.isPresent()&&UserOptional.isPresent()){
+            return bankAcctRepository.save(new Bank_acct(BankTypeOptional.get(),AccountCode,UserOptional.get()));
+        }else{
+            return null;
+        }
+    }
+    public boolean deleteBankAcct(long id) {
+        bankAcctRepository.deleteById(id);
+        return true;
+    }
+    public Bank_acct updateBankAcct(long bankType, String AccountCode, long userId) throws Exception {
+        Optional<Bank_acct> BankAcctOptional = bankAcctRepository.findById(bankType);
+        Optional<User> UserOptional = userRepository.findById(userId);
+        if (BankAcctOptional.isPresent()&& UserOptional.isPresent()) {
+            Bank_acct bankAcct = BankAcctOptional.get();
+            bankAcct.setUser(UserOptional.get());
+            if (AccountCode != null)
+                bankAcct.setAccount_code(AccountCode);
+            return bankAcctRepository.save(bankAcct);
+        }else{
+            throw new Exception("Not Found BankAcct");
         }
     }
 
