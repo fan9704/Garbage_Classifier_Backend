@@ -22,6 +22,8 @@ public class Mutation implements GraphQLMutationResolver {
     private BankAcctRepository bankAcctRepository;
     @Autowired
     private  UserRepository userRepository;
+    @Autowired
+    private  GarbageTypeRepository garbageTypeRepository;
 
 
     public Bank_type createBankType(String bank_name, String bank_code) {
@@ -78,6 +80,15 @@ public class Mutation implements GraphQLMutationResolver {
         if(UserOptional.isPresent()){
             return  UserOptional.get();
         }else{
+            return null;
+        }
+    }
+
+    public Garbage_type findGarbageTypeById(long id){
+        Optional<Garbage_type> GarbageTypeOptional = garbageTypeRepository.findById(id);
+        if(GarbageTypeOptional.isPresent()){
+            return GarbageTypeOptional.get();
+        }else {
             return null;
         }
     }
