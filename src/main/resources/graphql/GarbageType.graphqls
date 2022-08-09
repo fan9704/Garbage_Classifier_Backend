@@ -1,0 +1,11 @@
+type GarbageType {
+    id: ID
+    type_name: String
+    unit_price: Float
+}
+extend type Query {
+    findAllGarbageType: [GarbageType]!
+}
+extend type Mutation {
+    findGarbageTypeById(id:ID):GarbageType!
+}
