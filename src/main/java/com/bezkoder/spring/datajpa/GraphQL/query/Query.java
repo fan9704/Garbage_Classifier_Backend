@@ -21,6 +21,8 @@ public class Query implements GraphQLQueryResolver{
     private BankAcctRepository bankAcctRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private GarbageTypeRepository garbageTypeRepository;
 
     public List<Bank_type> findAllBankType() {
         return bankTypeRepository.findAll();
@@ -31,5 +33,7 @@ public class Query implements GraphQLQueryResolver{
     public List<User> findAllUser() {
         return userRepository.findAll();
     }
-
+    public List<Garbage_type> findAllGarbageType(){
+        return garbageTypeRepository.findAll();
+    }
 }
