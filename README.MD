@@ -45,10 +45,10 @@ Distribute System Use Messaging Queue
 
 ----
 
-### Software Interaction
+### Software Architecture
 
 
-![](https://imgdb.net/storage/uploads/164f2fed45f5fcc8494eb9cf7d0856cc2f7d8700ab468a2cdfa540cccc622763.png)
+![](./doc/FullStructure.png)
 
 ----
 
@@ -56,20 +56,9 @@ Distribute System Use Messaging Queue
 
 ----
 
-![](https://imgdb.net/storage/uploads/ae3a9af130234554cd6a0b53b1fd118ec4e5a6bea284110905d53620c01132e0.png)
+### Backend Architecture
 
-#### Spring Boot JPA MySQL - Building Rest CRUD API
-
-
-More Practice:
-> [Spring Boot Pagination & Filter example | Spring JPA, Pageable](https://www.bezkoder.com/spring-boot-pagination-filter-jpa-pageable/)
-
-> [Spring Data JPA Sort/Order by multiple Columns | Spring Boot](https://www.bezkoder.com/spring-data-sort-multiple-columns/)
-
-> [Spring Boot Repository Unit Test with @DataJpaTest](https://www.bezkoder.com/spring-boot-unit-test-jpa-repo-datajpatest/)
-
-Deployment:
-> [Deploy Spring Boot App on AWS – Elastic Beanstalk](https://bezkoder.com/deploy-spring-boot-aws-eb/)
+![](./doc/BackendStructure.png)
 
 ----
 
@@ -111,18 +100,39 @@ Deployment:
 - Read all something GET:/api/somethings
 - Update piece of something Patch:/api/something/{ID}
 
+### GraphQL Interface (Port Number 8080/graphql)
+
+GraphQL Schema
+
+> Schema Location **src/main/resource/graphql**
+
 ### Manager Server Interface (Port number 8000)
 Use Actuator and Micrometer
 
 ----
 
 ## Run Spring Boot application
-```
+```shell
 mvn spring-boot:run
 ```
 
-## shutdown through bash
+## Pack Backend to jar
+```shell
+mvn clean install
 ```
+
+## Build Backend Docker Image
+```shell
+docker build -t GCBackend .
+```
+
+## Run With Docker Container
+```shell
+docker run -p 8080:8080 GCBackend
+```
+
+## shutdown through bash
+```shell
  sudo lsof -i :8080 | grep LISTEN
  kill <PID>
 ```
