@@ -162,9 +162,9 @@
 		<!--SpringBoot Admin-->
 		<!--GraphQL-->
 		<dependency>
-			<groupId>com.graphql-java</groupId>
+			<groupId>com.graphql-java-kickstart</groupId>
 			<artifactId>graphql-spring-boot-starter</artifactId>
-			<version>5.0.2</version>
+			<version>12.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.graphql-java</groupId>
@@ -174,7 +174,7 @@
 		<dependency>
 			<groupId>com.graphql-java-kickstart</groupId>
 			<artifactId>graphiql-spring-boot-starter</artifactId>
-			<version>8.0.0</version>
+			<version>11.1.0</version>
 			<scope>runtime</scope>
 		</dependency>
 		<!--GraphQL-->
