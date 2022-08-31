@@ -39,7 +39,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             //GraphiQL
             "/graphiql/**",
             "/vendor/**",
-            "/subscriptions/**"
+            "/subscriptions/**",
+            //GraphQL
+            "/graphql/**"
 
     };
     @Override
